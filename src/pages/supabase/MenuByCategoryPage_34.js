@@ -42,7 +42,7 @@ const MenuByCategoryPage_34 = () => {
     <section className="menu">
       <div className="title">
         <h2>Menu From Supabase Menu Table</h2>
-        <h3>Billy, 210410634</h3>
+        <h3>A-ion, 210410634</h3>
         <div className="underline"></div>
       </div>
       <div className="btn-container">
