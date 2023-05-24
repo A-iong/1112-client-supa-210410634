@@ -1,21 +1,10 @@
 import { useState, useEffect } from "react";
 import "../../App.css";
 
-const base_url = `https://wkuwjlgjzkovodskzcca.supabase.co/rest/v1/menu_34?select=*`;
+const base_url = `http://localhost:5100/api/node_menu_34`;
 
 let url = `${base_url}`;
-
-const options = {
-  method: "GET",
-  headers: {
-    apikey:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndrdXdqbGdqemtvdm9kc2t6Y2NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM3MTcwNDksImV4cCI6MTk5OTI5MzA0OX0.3U3FHIECaMTBWIgPH-XjcvDA0UBzKMMt2oL37ZfJi-8",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndrdXdqbGdqemtvdm9kc2t6Y2NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM3MTcwNDksImV4cCI6MTk5OTI5MzA0OX0.3U3FHIECaMTBWIgPH-XjcvDA0UBzKMMt2oL37ZfJi-8",
-  },
-};
-
-const MenuPagea_34 = () => {
+const MenuPage_34 = () => {
   const [product, setProduct] = useState([]);
 
   const changeFilter = (filter) => {
@@ -28,7 +17,7 @@ const MenuPagea_34 = () => {
   };
 
   const getMenuData_34 = async () => {
-    const response = await fetch(url, options);
+    const response = await fetch(url);
     const data = await response.json();
     setProduct(data);
     console.log("menu data", data);
@@ -41,7 +30,7 @@ const MenuPagea_34 = () => {
   return (
     <section className="menu">
       <div className="title">
-        <h2>Menu From Supabase Menu Table</h2>
+        <h2>Menu From Node Server</h2>
         <h3>A-ion, 210410634</h3>
         <div className="underline"></div>
       </div>
@@ -89,7 +78,7 @@ const MenuPagea_34 = () => {
       </div>
       <div className="section-center">
         {product.map((item) => {
-          const { id, title, price, img, descrip } = item;
+          const { id, title, category, price, img, descrip } = item;
           return (
             <article className="menu-item" key={id}>
               <img src={img} alt={title} className="photo" />
@@ -108,4 +97,4 @@ const MenuPagea_34 = () => {
   );
 };
 
-export default MenuPagea_34;
+export default MenuPage_34;

@@ -2,41 +2,48 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams, Navigate } from "react-router-dom";
 import "../../App.css";
 
+const base_url = `https://wkuwjlgjzkovodskzcca.supabase.co/rest/v1/menu_34?select=*`;
+
+let url = `${base_url}`;
+
+const options = {
+  method: "GET",
+  headers: {
+    apikey:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndrdXdqbGdqemtvdm9kc2t6Y2NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM3MTcwNDksImV4cCI6MTk5OTI5MzA0OX0.3U3FHIECaMTBWIgPH-XjcvDA0UBzKMMt2oL37ZfJi-8",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndrdXdqbGdqemtvdm9kc2t6Y2NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM3MTcwNDksImV4cCI6MTk5OTI5MzA0OX0.3U3FHIECaMTBWIgPH-XjcvDA0UBzKMMt2oL37ZfJi-8",
+  },
+};
+
 const MenuByCategoryPage_34 = () => {
   const [product, setProduct] = useState([]);
+  const [category, setCategory] = useState("all");
   const params = useParams();
   console.log("params category", params.category);
 
   const navigate = useNavigate();
 
+  const changeFilter = (categorys) => {
+    console.log("categorys", categorys);
+    setCategory(categorys);
+  };
+
   const getMenuDataByCategory_34 = async (filter = "") => {
-    const response = await fetch(
-      `https://wkuwjlgjzkovodskzcca.supabase.co/rest/v1/menu_34?category=eq.${
-        filter ? filter : params.category
-      }&select=*`,
-      {
-        method: "GET",
-        headers: {
-          apikey:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndrdXdqbGdqemtvdm9kc2t6Y2NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM3MTcwNDksImV4cCI6MTk5OTI5MzA0OX0.3U3FHIECaMTBWIgPH-XjcvDA0UBzKMMt2oL37ZfJi-8",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndrdXdqbGdqemtvdm9kc2t6Y2NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM3MTcwNDksImV4cCI6MTk5OTI5MzA0OX0.3U3FHIECaMTBWIgPH-XjcvDA0UBzKMMt2oL37ZfJi-8",
-        },
-      }
-    );
+    if (category === "all") {
+      url = `${base_url}`;
+    } else {
+      url = `${base_url}&category=eq.${params.category}`;
+    }
+    const response = await fetch(url, options);
     const data = await response.json();
-    setProduct(data);
     console.log("menu data", data);
+    setProduct(data);
   };
 
   useEffect(() => {
     getMenuDataByCategory_34();
-  }, []);
-
-  const changeMenuFilter = (filter = "") => {
-    navigate(`/supa_menu_34/${filter}`);
-    getMenuDataByCategory_34(filter);
-  };
+  }, [category]);
 
   return (
     <section className="menu">
@@ -50,7 +57,10 @@ const MenuByCategoryPage_34 = () => {
           type="button"
           className="filter-btn"
           data-id="all"
-          onClick={() => getMenuDataByCategory_34("")}
+          onClick={() => {
+            changeFilter("all");
+            return navigate(`/supa_menu_34/all`);
+          }}
         >
           all
         </button>
@@ -58,7 +68,10 @@ const MenuByCategoryPage_34 = () => {
           type="button"
           className="filter-btn"
           data-id="breakfast"
-          onClick={() => changeMenuFilter("breakfast")}
+          onClick={() => {
+            changeFilter("breakfast");
+            return navigate(`/supa_menu_34/breakfast`);
+          }}
         >
           breakfast
         </button>
@@ -66,7 +79,10 @@ const MenuByCategoryPage_34 = () => {
           type="button"
           className="filter-btn"
           data-id="lunch"
-          onClick={() => changeMenuFilter("lunch")}
+          onClick={() => {
+            changeFilter("lunch");
+            return navigate(`/supa_menu_34/lunch`);
+          }}
         >
           lunch
         </button>
@@ -74,7 +90,10 @@ const MenuByCategoryPage_34 = () => {
           type="button"
           className="filter-btn"
           data-id="dessert"
-          onClick={() => changeMenuFilter("dessert")}
+          onClick={() => {
+            changeFilter("dessert");
+            return navigate(`/supa_menu_34/dessert`);
+          }}
         >
           dessert
         </button>
@@ -82,7 +101,10 @@ const MenuByCategoryPage_34 = () => {
           type="button"
           className="filter-btn"
           data-id="shakes"
-          onClick={() => changeMenuFilter("shakes")}
+          onClick={() => {
+            changeFilter("shakes");
+            return navigate(`/supa_menu_34/shakes`);
+          }}
         >
           shakes
         </button>
